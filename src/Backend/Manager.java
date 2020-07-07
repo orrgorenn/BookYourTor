@@ -1,3 +1,4 @@
+package Backend;
 public class Manager extends Person {
 	
 	private double revenue = 0;

@@ -2,6 +2,8 @@ import java.awt.GridLayout;
 
 import javax.swing.*;
 
+import Backend.Barbershop;
+
 public class BookYourTor {
 
 	private static void init() {

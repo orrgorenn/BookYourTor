@@ -1,3 +1,4 @@
+package Backend;
 public class Customer extends Person {
 
 	private int totalOrders = 0;

@@ -1,5 +1,7 @@
 import javax.swing.*;
 
+import Backend.Barbershop;
+
 public class LayoutManager {
 
 	public Barbershop barbershop;

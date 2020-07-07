@@ -1,8 +1,9 @@
+package Backend;
 public class Person {
 
-	private String fullName;
-	private String phone;
-	private String email;
+	protected String fullName;
+	protected String phone;
+	protected String email;
 	
 	public Person(String fullName, String phone, String email) {
 		this.fullName = fullName;

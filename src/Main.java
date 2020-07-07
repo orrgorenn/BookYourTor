@@ -1,11 +1,16 @@
 import javax.swing.*;
+
+import Backend.Barbershop;
+import GUI.*;
 import java.awt.event.*;
 
 public class Main {
 	
 	private static void createAndShowGUI() {
+		Barbershop bshop = new Barbershop();
+		
 		JFrame jFrame = new JFrame("BookYourTor");
-		jFrame.setSize(600, 400);
+		jFrame.setSize(600, 450);
 		jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jFrame.setLayout(null);
 		
@@ -15,7 +20,8 @@ public class Main {
 		jBtnAppointments.addActionListener(new ActionListener() {
 		    @Override
 		    public void actionPerformed(ActionEvent e) {
-		        //your actions
+		    	WorkersGUI.setSettings();
+		        WorkersGUI.getDialog().setVisible(true);
 		    }
 		});
 		jFrame.getContentPane().add(jBtnAppointments);

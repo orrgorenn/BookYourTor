@@ -1,3 +1,4 @@
+package Backend;
 public class Worker extends Person {
 
 	private double totalSalary;
@@ -28,6 +29,10 @@ public class Worker extends Person {
 	
 	public Manager getManager() {
 		return this.manager;
+	}
+	
+	public String toString() {
+		return super.fullName + ":" + this.phone + ":" + this.email;
 	}
 
 }
