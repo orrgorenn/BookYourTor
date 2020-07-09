@@ -31,4 +31,7 @@ public class Customer extends Person {
 		return this.worker;
 	}
 	
+	public String toString() {
+		return super.fullName + ":" + this.phone + ":" + this.email;
+	}
 }

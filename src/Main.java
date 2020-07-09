@@ -17,13 +17,6 @@ public class Main {
 		JButton jBtnAppointments = new JButton("Appointments");
 		jBtnAppointments.setSize(200 , 80);
 		jBtnAppointments.setLocation(20 , 20);
-		jBtnAppointments.addActionListener(new ActionListener() {
-		    @Override
-		    public void actionPerformed(ActionEvent e) {
-		    	WorkersGUI.setSettings();
-		        WorkersGUI.getDialog().setVisible(true);
-		    }
-		});
 		jFrame.getContentPane().add(jBtnAppointments);
 		
 		JButton jBtnServices = new JButton("Services");
@@ -34,18 +27,39 @@ public class Main {
 		JButton jBtnCustomers = new JButton("Customers");
 		jBtnCustomers.setSize(200 , 80);
 		jBtnCustomers.setLocation(20 , 150);
+		jBtnCustomers.addActionListener(new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		    	CustomersGUI.setSettings();
+		    	CustomersGUI.getDialog().setVisible(true);
+		    }
+		});
 		jFrame.getContentPane().add(jBtnCustomers);
 		
 		JButton jBtnWorkers = new JButton("Workers");
 		jBtnWorkers.setSize(200 , 80);
 		jBtnWorkers.setLocation(370 , 150);
+		jBtnWorkers.addActionListener(new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		    	WorkersGUI.setSettings();
+		        WorkersGUI.getDialog().setVisible(true);
+		    }
+		});
 		jFrame.getContentPane().add(jBtnWorkers);
 		
 		JButton jBtnStatistics = new JButton("Statistics");
 		jBtnStatistics.setSize(200 , 80);
 		jBtnStatistics.setLocation(190 , 280);
+		jBtnStatistics.addActionListener(new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		    	ManagerGUI.setSettings();
+		    	ManagerGUI.getDialog().setVisible(true);
+		    }
+		});
 		jFrame.getContentPane().add(jBtnStatistics);
-
+		
 		jFrame.setVisible(true);
 	}
 	

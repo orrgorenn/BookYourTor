@@ -23,6 +23,7 @@ public class WorkersGUI {
 		
 		workersGUI = new JDialog();
 		workersGUI.setLayout(null);
+		workersGUI.setTitle("Workers");
 		
 		JButton jBtnAddWorker = new JButton("Add Worker");
 		JButton jBtnDelWorker = new JButton("Delete Worker");
@@ -39,34 +40,41 @@ public class WorkersGUI {
 		    	JLabel fullNameLbl = new JLabel("Full Name:");
 		    	JTextField fullNameTxt = new JTextField();
 		    	
+		    	JLabel phoneLbl = new JLabel("Phone:");
+		    	JTextField phoneTxt = new JTextField();
+		    	
 		    	JLabel emailLbl = new JLabel("Email:");
 		    	JTextField emailTxt = new JTextField();
 		    	
-		    	JLabel phoneLbl = new JLabel("Phone:");
-		    	JTextField phoneTxt = new JTextField();
+		    	addWorkerDlg.add(fullNameLbl);
+		    	addWorkerDlg.add(fullNameTxt);
+		    	
+		    	addWorkerDlg.add(phoneLbl);
+		    	addWorkerDlg.add(phoneTxt);
+		    	
+		    	addWorkerDlg.add(emailLbl);
+		    	addWorkerDlg.add(emailTxt);
 		    	
 		    	JButton addBtn = new JButton("Add");
 		    	addBtn.addActionListener(new ActionListener() {
 		    		@Override
 		    		public void actionPerformed(ActionEvent e) {
-		    			// Check Info Entered & Add To File
 		    			String fullName = fullNameTxt.getText();
 		    			String email = emailTxt.getText();
 		    			String phone = phoneTxt.getText();
-		    			workers.addElement(fullName + " | " + email + " | " + phone);
-		    			Barbershop.addWorker(new Worker(fullName, email, phone));
-		    			addWorkerDlg.dispose();
+		    			if(fullName.matches(".*\\d.*")) {
+		    				JOptionPane.showMessageDialog(addWorkerDlg, "Error: Name cannot contain numbers.");
+		    			} else if(!email.contains("@")) {
+		    				JOptionPane.showMessageDialog(addWorkerDlg, "Error: Email is not in correct format.");
+		    			} else if(phone.length() < 10) {
+		    				JOptionPane.showMessageDialog(addWorkerDlg, "Error: Phone must be atleast 10 digits.");
+		    			} else {
+		    				workers.addElement(fullName + " | " + email + " | " + phone);
+			    			Barbershop.addElement(Worker.class, new Worker(fullName, phone, email));
+			    			addWorkerDlg.dispose();
+		    			}
 		    		}
 		    	});
-		    	
-		    	addWorkerDlg.add(fullNameLbl);
-		    	addWorkerDlg.add(fullNameTxt);
-		    	
-		    	addWorkerDlg.add(emailLbl);
-		    	addWorkerDlg.add(emailTxt);
-		    	
-		    	addWorkerDlg.add(phoneLbl);
-		    	addWorkerDlg.add(phoneTxt);
 		    	
 		    	addWorkerDlg.add(addBtn);
 		    	
@@ -96,14 +104,13 @@ public class WorkersGUI {
 				DefaultListModel model = (DefaultListModel) workersList.getModel();
 				
 				if (currentIndex != -1) {
-					Barbershop.removeWorker(currentIndex);
+					Barbershop.removeElement(Worker.class, currentIndex);
 					model.remove(currentIndex);
 				}
 			}
 		});
 		workersGUI.add(jBtnDelWorker);
 		
-		// Load to List
 		workers.clear();
 		for(int i = 0; i < Barbershop.getListOfWorkers().size(); i++) {
 			String[] split = Barbershop.getListOfWorkers().get(i).toString().split(":");

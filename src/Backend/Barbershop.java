@@ -41,84 +41,112 @@ public class Barbershop extends JPanel {
 		mainAppointmentsList = new ArrayList<Appointment>();
 		mainCustomersList = new ArrayList<Customer>();
 		
+		createFiles();
+		
 		loadWorkers();
 		loadServices();
 		loadAppointments();
 		loadCustomers();
 	}
 	
+	public static void addElement(Class<?> element, Object obj) {
+		if(element == Worker.class) {
+			try {
+				FileWriter myWriter = new FileWriter(workersFile, true);
+				myWriter.write(obj.toString() + "\r\n");
+				myWriter.close();
+				mainWorkersList.add((Worker)obj);
+			} catch (FileNotFoundException er) {
+				System.out.println("An error occurred.");
+				er.printStackTrace();
+			} catch (IOException er) {
+				System.out.println("An error occurred.");
+				er.printStackTrace();
+			}
+		} else if(element == Customer.class) {
+			try {
+				FileWriter myWriter = new FileWriter(customersFile, true);
+				myWriter.write(obj.toString() + "\r\n");
+				myWriter.close();
+				mainCustomersList.add((Customer)obj);
+			} catch (FileNotFoundException er) {
+				System.out.println("An error occurred.");
+				er.printStackTrace();
+			} catch (IOException er) {
+				System.out.println("An error occurred.");
+				er.printStackTrace();
+			}
+		} else {
+			System.out.println(element.toString());
+		}
+	}
+	
 	public static void addService(Service serv) {
 		mainServicesList.add(serv);
 	}
 	
-	public static void addWorker(Worker w) {
-		try {
-			File myObj = new File(workersFile);
-			if (myObj.createNewFile()) {
-				System.out.println("File created: " + myObj.getName());
-			} else {
-				System.out.println("File already exists.");
-			}
-			
-			FileWriter myWriter = new FileWriter(workersFile, true);
-			myWriter.write(w.getFullName() + ":" + w.getEmail() + ":" + w.getPhone() + "\r\n");
-			myWriter.close();
-			mainWorkersList.add(w);
-		} catch (FileNotFoundException er) {
-			System.out.println("An error occurred.");
-			er.printStackTrace();
-		} catch (IOException er) {
-			System.out.println("An error occurred.");
-			er.printStackTrace();
-		}
-	}
-	
 	public void addAppointment(Appointment a) {
-		this.mainAppointmentsList.add(a);
-	}
-	
-	public static void addCustomer(Customer c) {
-		mainCustomersList.add(c);
+		mainAppointmentsList.add(a);
 	}
 	
 	public static void removeService(int i) {
 		mainServicesList.remove(i);
 	}
 	
-	public static void removeWorker(int i) {
-		
-		File inputFile = new File(workersFile);
-		File tempFile = new File("temp_" + workersFile + ".txt");
-		try {
-			BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-			BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
+	public static void removeElement(Class<?> element, int i) {
+		if(element == Worker.class) {
+			File inputFile = new File(workersFile);
+			File tempFile = new File("temp_" + workersFile);
+			try {
+				BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+				BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
 
-			String currentLine;
+				String currentLine;
 
-			while((currentLine = reader.readLine()) != null) {
-			    // trim newline when comparing with lineToRemove
-			    String trimmedLine = currentLine.trim();
-			    if(trimmedLine.equals(mainWorkersList.get(i).toString())) {
-			    	continue;
-			    }
-			    writer.write(currentLine + System.getProperty("line.separator"));
+				while((currentLine = reader.readLine()) != null) {
+				    String trimmedLine = currentLine.trim();
+				    if(trimmedLine.equals(mainWorkersList.get(i).toString())) {
+				    	continue;
+				    }
+				    writer.write(currentLine + System.getProperty("line.separator"));
+				}
+				writer.close(); 
+				reader.close(); 
+				boolean successful = tempFile.renameTo(inputFile);
+				if(!successful) throw new IOException();
+			} catch (IOException er) {
+				er.printStackTrace();
 			}
-			writer.close(); 
-			reader.close(); 
-			boolean successful = tempFile.renameTo(inputFile);
-		} catch (IOException er) {
-			er.printStackTrace();
+			mainWorkersList.remove(i);
+		} else if(element == Customer.class) {
+			File inputFile = new File(customersFile);
+			File tempFile = new File("temp_" + customersFile);
+			try {
+				BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+				BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
+
+				String currentLine;
+
+				while((currentLine = reader.readLine()) != null) {
+				    String trimmedLine = currentLine.trim();
+				    if(trimmedLine.equals(mainCustomersList.get(i).toString())) {
+				    	continue;
+				    }
+				    writer.write(currentLine + System.getProperty("line.separator"));
+				}
+				writer.close(); 
+				reader.close(); 
+				boolean successful = tempFile.renameTo(inputFile);
+				if(!successful) throw new IOException();
+			} catch (IOException er) {
+				er.printStackTrace();
+			}
+			mainCustomersList.remove(i);
 		}
-		
-		mainWorkersList.remove(i);
 	}
 	
 	public static void removeAppointment(int i) {
 		mainAppointmentsList.remove(i);
-	}
-	
-	public static void removeCustomer(int i) {
-		mainCustomersList.remove(i);
 	}
 	
 	public static List<Service> getListOfServices() {
@@ -139,25 +167,16 @@ public class Barbershop extends JPanel {
 	
 	public static void loadWorkers() {
 		try {
-			File myObj = new File("workers.txt");
-			if (myObj.createNewFile()) {
-				System.out.println("File created: " + myObj.getName());
-			} else {
-				System.out.println("File already exists.");
-			}
+			File myObj = new File(workersFile);
 			Scanner myReader = new Scanner(myObj);
 			while (myReader.hasNextLine()) {
 				String data = myReader.nextLine();
 				System.out.println(data);
 				String[] split = data.split(":");
-				Worker wrk = new Worker(split[0], split[1], split[2]);
-				mainWorkersList.add(wrk);
+				mainWorkersList.add(new Worker(split[0], split[1], split[2]));
 			}
 			myReader.close();
 		} catch (FileNotFoundException er) {
-			System.out.println("An error occurred.");
-			er.printStackTrace();
-		} catch (IOException er) {
 			System.out.println("An error occurred.");
 			er.printStackTrace();
 		}
@@ -168,11 +187,43 @@ public class Barbershop extends JPanel {
 	}
 	
 	public static void loadCustomers() {
-		
+		try {
+			File myObj = new File(customersFile);
+			Scanner myReader = new Scanner(myObj);
+			while (myReader.hasNextLine()) {
+				String data = myReader.nextLine();
+				System.out.println(data);
+				String[] split = data.split(":");
+				mainCustomersList.add(new Customer(split[0], split[1], split[2]));
+			}
+			myReader.close();
+		} catch (FileNotFoundException er) {
+			System.out.println("An error occurred.");
+			er.printStackTrace();
+		}
 	}
 	
 	public static void loadAppointments() {
 		
+	}
+	
+	public static void createFiles() {
+		try {
+			File wFile = new File(workersFile);
+			if (wFile.createNewFile()) {
+				System.out.println("File created: " + wFile.getName());
+			}
+			File cFile = new File(customersFile);
+			if (cFile.createNewFile()) {
+				System.out.println("File created: " + cFile.getName());
+			}
+		} catch (FileNotFoundException er) {
+			System.out.println("An error occurred.");
+			er.printStackTrace();
+		} catch (IOException er) {
+			System.out.println("An error occurred.");
+			er.printStackTrace();
+		}
 	}
 	
 }
