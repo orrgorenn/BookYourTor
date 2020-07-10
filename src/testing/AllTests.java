@@ -10,7 +10,9 @@ import org.junit.runners.Suite.SuiteClasses;
         TestCustomer.class,
         TestPerson.class,
         TestService.class,
-        TestWorker.class })
+        TestWorker.class,
+        TestBarbershop.class,
+        TestManager.class })
 
 public class AllTests {
 
