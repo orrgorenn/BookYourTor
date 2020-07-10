@@ -2,8 +2,7 @@ package Backend;
 public class Customer extends Person {
 
 	private int totalOrders = 0;
-	private double totalPayed = 0;
-	private Worker worker;
+	private double totalPayed = 0.0;
 	
 	public Customer(String fullName, String phone, String email) {
 		super(fullName, phone, email);
@@ -21,14 +20,6 @@ public class Customer extends Person {
 	
 	public double getTotalPayed() {
 		return this.totalPayed;
-	}
-	
-	public void setWorker(Worker w) {
-		this.worker = w;
-	}
-	
-	public Worker getWorker() {
-		return this.worker;
 	}
 	
 	public String toString() {

@@ -1,41 +1,37 @@
 package Backend;
 public class Appointment {
 	private String date;
-	private String startTime;
-	private String endTime;
+	private String time;
 	private Customer customer;
 	private Service service;
+	private Worker worker;
 	
-	public Appointment(String date, String startTime, String endTime, Customer cus, Service serv) {
+	public Appointment(String date, String time, Customer cus, Service serv, Worker work) {
 		this.date = date;
-		this.startTime = startTime;
-		this.endTime = endTime;
+		this.time = time;
 		this.customer = cus;
 		this.service = serv;
+		this.worker = work;
 	}
 	
 	public void setDate(String date) {
 		this.date = date;
 	}
 	
-	public void setStartTime(String startTime) {
-		this.startTime = startTime;
+	public void setTime(String time) {
+		this.time = time;
 	}
 	
-	public void setEndTime(String endTime) {
-		this.endTime = endTime;
+	public void setWorker(Worker work) {
+		this.worker = work;
 	}
 	
 	public String getDate() {
 		return this.date;
 	}
 	
-	public String getStartTime() {
-		return this.startTime;
-	}
-	
-	public String getEndTime() {
-		return this.endTime;
+	public String getTime() {
+		return this.time;
 	}
 	
 	public Customer getCustomer() {
@@ -44,5 +40,13 @@ public class Appointment {
 	
 	public Service getService() {
 		return this.service;
+	}
+	
+	public Worker getWorker() {
+		return this.worker;
+	} 
+	
+	public String toString() {
+		return this.date + "-" + this.time + "-" + this.customer.getFullName() + "-" + this.service.getName() + "-" + this.worker.getFullName();
 	}
 }

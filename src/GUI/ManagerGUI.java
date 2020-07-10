@@ -67,10 +67,9 @@ class statisticWin {
 		data = new String[10][3];
 		
 		for(int c = 0; c < Barbershop.getListOfWorkers().size(); c++) {
-			System.out.println("c: " + c);
 			data[c][0] = Barbershop.getListOfWorkers().get(c).getFullName();
 			data[c][1] = String.valueOf(Barbershop.getListOfWorkers().get(c).getTotalOrders());
-			data[c][2] = String.valueOf(Barbershop.getListOfWorkers().get(c).getTotalSalary());
+			data[c][2] = String.valueOf(Barbershop.getListOfWorkers().get(c).getTotalSalary() + " ILS");
 		}
 		
 		revenueTable = new JTable(data, columnNames);
@@ -79,8 +78,8 @@ class statisticWin {
 		scrollPane.setSize(600, 400);
 		statisticsDlg.add(scrollPane);
 		
-		JLabel totalOrders = new JLabel("Total Orders: 100");
-		JLabel totalRevenue = new JLabel("Total Revenue: 100000");
+		JLabel totalOrders = new JLabel("Total Orders: " + String.valueOf(Barbershop.getManager().getTotalOrders()));
+		JLabel totalRevenue = new JLabel("Total Revenue: " + String.valueOf(Barbershop.getManager().getRevenue()) + " ILS");
 		JButton logoutBtn = new JButton("Logout");
 		
 		totalOrders.setSize(200, 20);
@@ -110,6 +109,5 @@ class statisticWin {
 	}
 	
 }
-
 
 

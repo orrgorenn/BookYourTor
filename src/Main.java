@@ -18,11 +18,25 @@ public class Main {
 		jBtnAppointments.setSize(200 , 80);
 		jBtnAppointments.setLocation(20 , 20);
 		jFrame.getContentPane().add(jBtnAppointments);
+		jBtnAppointments.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				AppointmentsGUI.setSettings();
+				AppointmentsGUI.getDialog().setVisible(true);
+			}
+		});
 		
 		JButton jBtnServices = new JButton("Services");
 		jBtnServices.setSize(200 , 80);
 		jBtnServices.setLocation(370 , 20);
 		jFrame.getContentPane().add(jBtnServices);
+		jBtnServices.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ServicesGUI.setSetting();
+				ServicesGUI.getDialog().setVisible(true);
+			}
+		});
 		
 		JButton jBtnCustomers = new JButton("Customers");
 		jBtnCustomers.setSize(200 , 80);
